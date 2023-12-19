@@ -5,7 +5,8 @@
 
 Track time spent on PC
 
-- Pico equipped with distance sensor attached to wall, checks if im sitting on my computer
-- Send data over wifi to server
-- Log data and run forecasting algo
+- Create DB ✅
+- Create Insert into DB functionality ✅
+- Setup Pico equipped with distance sensor attached to wall, checks if im sitting on my computer
+- Run forecasting algo
 - Update daily on the readme

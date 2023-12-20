@@ -1,8 +1,5 @@
 # Module Imports
-import mariadb
-import sys
-import json
-from src.utils import connect_db, send_data
+from src.db_utils import connect_db, send_data
 
 
 conn = connect_db()

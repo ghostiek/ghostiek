@@ -255,5 +255,5 @@ cython_debug/
 
 # Get rid of creds
 src/config.json
-src/pico/mqttconfig.json
+src/pico/mqtt_config.json
 src/pico/wifi_config.json

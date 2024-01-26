@@ -5,11 +5,11 @@
 
 Track time spent on PC
 
-- Create DB ✅
+- Create MariaDB on Pi4 ✅
 - Create Insert into DB functionality ✅
 - Setup Pico equipped with distance sensor attached to wall, checks if im sitting on my computer ✅
-- Setup MQTT Cluster ✅
+- Setup MQTT Broker on Pi4 ✅
 - Send data to MQTT server ✅
-- Save data from MQTT Cluster to write to MariaDB
+- Save data from Pi to write to MariaDB
 - Run forecasting algo
 - Update daily on the readme

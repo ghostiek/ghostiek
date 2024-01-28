@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import db_utils as db
 import json
 
 with open("../pico/mqtt_config.json", "r") as mqtt_file:
@@ -15,6 +16,11 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
+    conn = db.connect_db()
+    cur = conn.cursor()
+    db.send_data(conn, cur, msg.payload)
+    conn.close()
+    
 
 client = mqtt.Client()
 client.username_pw_set(username=mqtt_config["username"], password=mqtt_config["password"])

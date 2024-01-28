@@ -3,7 +3,7 @@ import sys
 import json
 
 
-def connect_db(config_path="../config.json"):
+def connect_db(config_path="mariadb_config.json"):
     with open(config_path, "r") as file:
         creds = json.load(file)
 

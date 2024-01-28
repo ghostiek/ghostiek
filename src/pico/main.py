@@ -38,12 +38,16 @@ sns = Ultrasonic(17, 16)
 
 
 while True:
-    client.connect()
-    distance = sns.distance_in_cm()
-    if distance:
-        print('Distance:', distance, 'cm')
-        client.publish(topic_pub, str.encode(str(distance)))
-    client.disconnect()
-    utime.sleep(5)
+    try:
+        client.connect()
+        distance = sns.distance_in_cm()
+        if distance:
+            print('Distance:', distance, 'cm')
+            client.publish(topic_pub, str.encode(str(distance)))
+        client.disconnect()
+        utime.sleep(5)
+    except Exception as e:
+        print(e)
+        pass
     
 

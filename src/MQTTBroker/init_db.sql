@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS sensordb;
+CREATE DATABASE sensordb;
+USE sensordb;
+CREATE TABLE time_on_pc (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp_column TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    distance FLOAT
+);
+

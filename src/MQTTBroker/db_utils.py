@@ -23,6 +23,6 @@ def connect_db(config_path="mariadb_config.json"):
     return conn
 
 
-def send_data(conn, cur, vals):
-    cur.execute("INSERT INTO time_on_pc(distance, on_pc) VALUES (?, ?);", vals)
+def send_data(conn, cur, dist):
+    cur.execute("INSERT INTO time_on_pc(distance) VALUES (?);", dist)
     conn.commit()

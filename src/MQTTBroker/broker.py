@@ -19,8 +19,7 @@ def on_message(client, userdata, msg):
     conn = db.connect_db()
     cur = conn.cursor()
     data = float(msg.payload)
-    on_pc = data < 80
-    db.send_data(conn, cur, (data, on_pc))
+    db.send_data(conn, cur, (data,))
     conn.close()
     
 

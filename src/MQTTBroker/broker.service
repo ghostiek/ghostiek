@@ -1,0 +1,10 @@
+[Unit]
+Description=Service that runs the MQTT Broker
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/home/pi/Desktop/ghostiek/src/MQTTBroker/venv/bin/python /home/pi/Desktop/ghostiek/src/MQTTBroker/broker.py
+
+[Install]
+WantedBy=multi-user.target

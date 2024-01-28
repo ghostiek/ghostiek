@@ -1,8 +1,14 @@
 import paho.mqtt.client as mqtt
 import db_utils as db
 import json
+import os
+from pathlib import Path
 
-with open("../pico/mqtt_config.json", "r") as mqtt_file:
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+path = Path(dir_path)
+parent_path=path.parent.absolute()
+with open(f"{parent_path}/pico/mqtt_config.json", "r") as mqtt_file:
     mqtt_config = json.load(mqtt_file)
 
 # The callback for when the client receives a CONNACK response from the server.

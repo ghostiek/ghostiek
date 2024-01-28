@@ -18,7 +18,8 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     conn = db.connect_db()
     cur = conn.cursor()
-    db.send_data(conn, cur, msg.payload)
+    data = float(msg.payload)
+    db.send_data(conn, cur, (data,))
     conn.close()
     
 

@@ -255,10 +255,10 @@ cython_debug/
 .idea/
 
 # Get rid of creds
-src/readme/ssh_config.json
-src/readme/mariadb_ga_config.json
+Pi/readme/ssh_config.json
+Pi/readme/mariadb_ga_config.json
 mariadb_config.json
 *venv/
 src/server/mariadb_config.json
-src/pico/mqtt_config.json
-src/pico/wifi_config.json
+pico/mqtt_config.json
+pico/wifi_config.json

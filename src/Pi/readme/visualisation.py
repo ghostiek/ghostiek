@@ -2,11 +2,14 @@ import matplotlib.pyplot as plt
 import src.Pi.db.db_utils as db
 import json
 import os
+from pathlib import Path
 
 
 def run():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    conn = db.connect_db()
+    path = Path(dir_path)
+    parent_path = path.parent.absolute()
+    conn = db.connect_db(f"{parent_path}/db//mariadb_config.json")
     cur = conn.cursor()
     data = db.read_data(conn, cur)
     conn.close()

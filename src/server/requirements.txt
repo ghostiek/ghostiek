@@ -1,4 +1,0 @@
-flask
-pyopenssl
-mariadb
-gunicorn

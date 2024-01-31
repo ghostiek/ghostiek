@@ -29,3 +29,11 @@ def connect_db(config_path=f"{dir_path}/mariadb_config.json"):
 def send_data(conn, cur, dist):
     cur.execute("INSERT INTO time_on_pc(distance) VALUES (?);", dist)
     conn.commit()
+
+
+def read_data(conn, cur):
+    # Get Cursor
+    cur.execute("SELECT * FROM sensordb.time_on_pc;")
+    result = cur.fetchall()
+    conn.close()
+    return result

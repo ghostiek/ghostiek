@@ -4,7 +4,7 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-ExecStart=/home/pi/Desktop/ghostiek/src/Pi/MQTTBroker/venv/bin/python /home/pi/Desktop/ghostiek/src/Pi/MQTTBroker/broker.py
+ExecStart=/home/pi/Desktop/ghostiek/src/Pi/MQTTBroker/broker_venv/bin/python /home/pi/Desktop/ghostiek/src/Pi/MQTTBroker/broker.py
 
 [Install]
 WantedBy=multi-user.target

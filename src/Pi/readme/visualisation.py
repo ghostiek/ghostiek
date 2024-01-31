@@ -9,7 +9,7 @@ def run():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     path = Path(dir_path)
     parent_path = path.parent.absolute()
-    conn = db.connect_db(f"{parent_path}/db//mariadb_config.json")
+    conn = db.connect_db(f"{parent_path}/db/mariadb_config.json")
     cur = conn.cursor()
     data = db.read_data(conn, cur)
     conn.close()

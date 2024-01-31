@@ -4,6 +4,8 @@ import json
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
 def connect_db(config_path=f"{dir_path}/mariadb_config.json"):
     with open(config_path, "r") as file:
         creds = json.load(file)

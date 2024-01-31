@@ -255,6 +255,9 @@ cython_debug/
 .idea/
 
 # Get rid of creds
+src/readme/ssh_config.json
+src/readme/mariadb_ga_config.json
 src/MQTTBroker/mariadb_config.json
+src/server/mariadb_config.json
 src/pico/mqtt_config.json
 src/pico/wifi_config.json

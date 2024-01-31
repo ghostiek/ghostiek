@@ -4,12 +4,26 @@ import json
 import os
 from pathlib import Path
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-path = Path(dir_path)
-parent_path = path.parent.parent.absolute()
-with open(f"{parent_path}/pico/mqtt_config.json", "r") as mqtt_file:
-    mqtt_config = json.load(mqtt_file)
+def run():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    path = Path(dir_path)
+    parent_path = path.parent.parent.absolute()
+    global mqtt_config
+    with open(f"{parent_path}/pico/mqtt_config.json", "r") as mqtt_file:
+        mqtt_config = json.load(mqtt_file)
 
+    client = mqtt.Client()
+    client.username_pw_set(username=mqtt_config["username"], password=mqtt_config["password"])
+    client.on_connect = on_connect
+    client.on_message = on_message
+
+    client.connect("localhost", mqtt_config["port"], 60)
+
+    # Blocking call that processes network traffic, dispatches callbacks and
+    # handles reconnecting.
+    # Other loop*() functions are available that give a threaded interface and a
+    # manual interface.
+    client.loop_forever()
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -30,15 +44,8 @@ def on_message(client, userdata, msg):
     conn.close()
 
 
-client = mqtt.Client()
-client.username_pw_set(username=mqtt_config["username"], password=mqtt_config["password"])
-client.on_connect = on_connect
-client.on_message = on_message
 
-client.connect("localhost", mqtt_config["port"], 60)
 
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-# Other loop*() functions are available that give a threaded interface and a
-# manual interface.
-client.loop_forever()
+
+if __name__ == "__main__":
+    run()

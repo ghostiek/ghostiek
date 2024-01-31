@@ -6,16 +6,12 @@ import json
 
 def get_creds():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    config_path = f"{dir_path}/mariadb_ga_config.json"
-    ssh_path = f"{dir_path}/ssh_config.json"
-
-    # SSH configs
-    with open(ssh_path, "r") as ssh_config_file:
-        ssh_config = json.load(ssh_config_file)
+    config_path = f"{dir_path}/mariadb_config.json"
 
     # MariaDB configs
     with open(config_path, "r") as file:
         creds = json.load(file)
+    return creds
 
 
 def read_data(creds):
@@ -33,9 +29,9 @@ def read_data(creds):
         sys.exit(1)
 
     # Get Cursor
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
 
     cur.execute("SELECT * FROM sensordb.time_on_pc;")
-    x = cur.fetchall()
-    print(x)
+    result = cur.fetchall()
     conn.close()
+    return result

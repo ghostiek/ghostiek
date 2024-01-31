@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 WorkingDirectory=/home/pi/Desktop/ghostiek
-ExecStart=/home/pi/Desktop/ghostiek/src/Pi/MQTTBroker/broker_venv/bin/python -m src.Pi.MQTTBroker.broker.run
+ExecStart=/home/pi/Desktop/ghostiek/venv/bin/python -m src.Pi.MQTTBroker.broker.run
 
 [Install]
 WantedBy=multi-user.target

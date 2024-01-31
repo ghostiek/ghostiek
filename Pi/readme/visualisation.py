@@ -7,12 +7,13 @@ from pathlib import Path
 
 
 def get_data(cached=False):
-    path = "src/Pi/readme/data.json"
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    path = "data.json"
     if cached:
-        with open(path, "r") as data_file:
+        with open(f"{dir_path}/{path}", "r") as data_file:
             data = json.load(data_file)
         return data
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+
     path = Path(dir_path)
     parent_path = path.parent.absolute()
     conn = db.connect_db(f"{parent_path}/db/mariadb_config.json")
@@ -30,7 +31,7 @@ def plot(data):
     dates = dts.date2num(dates0)
     distance = [x[2] for x in data]
     ax = plt.plot_date(dates, distance)
-    plt.xlim(dates[-30], dates[-5])
+    plt.xlim(dates[-75], dates[-5])
     plt.show()
 
 

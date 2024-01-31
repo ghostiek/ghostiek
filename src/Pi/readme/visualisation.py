@@ -15,7 +15,7 @@ def run():
     conn.close()
 
     with open("data.json", "w") as data_file:
-        json.dump(data, data_file)
+        json.dump(data, data_file, indent=4, sort_keys=True, default=str)
 
     x = [0, 1, 2, 3]
     y = [0, 2, 4, 6]

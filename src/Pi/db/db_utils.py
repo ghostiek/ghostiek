@@ -35,5 +35,4 @@ def read_data(conn, cur):
     # Get Cursor
     cur.execute("SELECT * FROM sensordb.time_on_pc;")
     result = cur.fetchall()
-    conn.close()
     return result

@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import pandas as pd
+from datetime import datetime, date
 
 
 def get_data(is_pi=False):
@@ -40,8 +41,11 @@ def plot(data):
 def pretty_plot(data, is_pi):
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
-    df = pd.DataFrame({"TimestampString":dates, "Distance": distance})
-    df["Timestamp"] = pd.to_datetime(df["TimestampString"], format="%Y-%m-%d %H:%M:%S")
+    df_all = pd.DataFrame({"TimestampString":dates, "Distance": distance})
+    df_all["Timestamp"] = pd.to_datetime(df_all["TimestampString"], format="%Y-%m-%d %H:%M:%S")
+    # Today's data
+    df = df_all[df_all["Timestamp"].dt.date >= date.today()]
+
     # Add the line over the area with the plot function
     fig = plt.figure(figsize=[7, 5])
     ax = plt.subplot(111)
@@ -54,8 +58,8 @@ def pretty_plot(data, is_pi):
     ax.set_xlabel('Timestamp')
     ax.set_ylabel('Distance from Computer')
     ax.set_title("Time Spent on Computer")
-    ax.set_xlim(df["Timestamp"].iloc[-500], df["Timestamp"].iloc[-100])
-    ax.set_ylim(0, max(distance[-500:-100])+30)
+    ax.set_xlim(df["Timestamp"].min(), df["Timestamp"].max())
+    ax.set_ylim(0, df["Distance"].max()+30)
     # set the grid on
     ax.grid('on')
 
@@ -88,7 +92,7 @@ def pretty_plot(data, is_pi):
     ttl.set_weight('bold')
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f'{dir_path}/graphs/plot.png')
+    plt.savefig(f'{dir_path}/graphs/plot-{datetime.now()}.png')
     # Show the graph
     if not is_pi:
         plt.show()
@@ -98,9 +102,12 @@ if __name__ == "__main__":
     # Check hostname
     dir_path = os.path.dirname(os.path.realpath(__file__))
     path = Path(dir_path)
-    parent_path = path.parent.absolute() 
-    with open(f"{parent_path}/pi_info.json", "r") as pi_info_file:
-        pi_info = json.load(pi_info_file)
-    is_pi = os.uname().nodename == pi_info["hostname"]
+    parent_path = path.parent.absolute()
+    try:
+        with open(f"{parent_path}/pi_info.json", "r") as pi_info_file:
+            pi_info = json.load(pi_info_file)
+        is_pi = os.uname().nodename == pi_info["hostname"]
+    except FileNotFoundError:
+        is_pi = False
     data = get_data(is_pi)
     pretty_plot(data, is_pi)

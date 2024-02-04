@@ -7,11 +7,12 @@ from pathlib import Path
 import pandas as pd
 
 
-def get_data(cached=False):
+def get_data(is_pi=False):
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    path = "data.json"
-    if cached:
-        with open(f"{dir_path}/{path}", "r") as data_file:
+    file_path = "data.json"
+    if not is_pi:
+        # Get data from saved dir since we can't access db
+        with open(f"{dir_path}/{file_path}", "r") as data_file:
             data = json.load(data_file)
         return data
 
@@ -22,7 +23,7 @@ def get_data(cached=False):
     data = db.read_data(conn, cur)
     conn.close()
 
-    with open(path, "w") as data_file:
+    with open(f"{path}/{file_path}", "w") as data_file:
         json.dump(data, data_file, indent=4, sort_keys=True, default=str)
     return data
 
@@ -36,7 +37,7 @@ def plot(data):
     plt.show()
 
 
-def pretty_plot(data):
+def pretty_plot(data, is_pi):
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
     df = pd.DataFrame({"TimestampString":dates, "Distance": distance})
@@ -53,8 +54,8 @@ def pretty_plot(data):
     ax.set_xlabel('Timestamp')
     ax.set_ylabel('Distance from Computer')
     ax.set_title("Time Spent on Computer")
-    ax.set_xlim(df["Timestamp"].iloc[-50], df["Timestamp"].iloc[-10])
-    ax.set_ylim(0, max(distance[-50:-10])+30)
+    ax.set_xlim(df["Timestamp"].iloc[-500], df["Timestamp"].iloc[-100])
+    ax.set_ylim(0, max(distance[-500:-100])+30)
     # set the grid on
     ax.grid('on')
 
@@ -86,18 +87,20 @@ def pretty_plot(data):
     ttl = ax.title
     ttl.set_weight('bold')
     # Save figure
-    # get path
-    plt.savefig('plot.png')
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    plt.savefig(f'{dir_path}/graphs/plot.png')
     # Show the graph
-    if is_pi:
+    if not is_pi:
         plt.show()
 
 
 if __name__ == "__main__":
     # Check hostname
-    #fix path
-    with open("pi_info.json", "r") as pi_info_file:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    path = Path(dir_path)
+    parent_path = path.parent.absolute() 
+    with open(f"{parent_path}/pi_info.json", "r") as pi_info_file:
         pi_info = json.load(pi_info_file)
     is_pi = os.uname().nodename == pi_info["hostname"]
     data = get_data(is_pi)
-    pretty_plot(data)
+    pretty_plot(data, is_pi)

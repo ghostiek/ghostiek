@@ -1,5 +1,4 @@
 paho-mqtt
 mariadb
 matplotlib
-PyQt5
 pandas

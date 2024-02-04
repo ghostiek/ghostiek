@@ -1,1 +1,1 @@
-/home/pi/Desktop/ghostiek/venv/bin/python -m Pi.readme.visualisation.run
+/home/pi/Desktop/ghostiek/venv/bin/python -m Pi.readme.visualisation

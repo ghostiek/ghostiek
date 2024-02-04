@@ -5,6 +5,13 @@ import utime
 import network
 from umqtt.simple import MQTTClient
 
+from machine import Pin
+import time
+
+
+time.sleep(10)
+
+
 with open("wifi_config.json", "r") as wifi_config:
     wifi_creds = json.load(wifi_config)
 
@@ -17,7 +24,7 @@ def do_connect():
     if not sta_if.isconnected():
         print('connecting to network...')
         sta_if.active(True)
-        sta_if.connect(wifi_creds["username"], wifi_creds["password"])
+        sta_if.connect(wifi_creds["ssid"], wifi_creds["password"])
         while not sta_if.isconnected():
             pass
     print('network config:', sta_if.ifconfig())

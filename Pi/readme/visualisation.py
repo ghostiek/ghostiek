@@ -85,9 +85,19 @@ def pretty_plot(data):
     # tweak the title
     ttl = ax.title
     ttl.set_weight('bold')
+    # Save figure
+    # get path
+    plt.savefig('plot.png')
     # Show the graph
-    plt.show()
+    if is_pi:
+        plt.show()
 
 
-data = get_data(True)
-pretty_plot(data)
+if __name__ == "__main__":
+    # Check hostname
+    #fix path
+    with open("pi_info.json", "r") as pi_info_file:
+        pi_info = json.load(pi_info_file)
+    is_pi = os.uname().nodename == pi_info["hostname"]
+    data = get_data(is_pi)
+    pretty_plot(data)

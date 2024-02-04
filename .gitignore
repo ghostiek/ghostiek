@@ -257,8 +257,8 @@ cython_debug/
 # Get rid of creds
 Pi/readme/ssh_config.json
 Pi/readme/mariadb_ga_config.json
+Pi/pi_info.json
 mariadb_config.json
 *venv/
-src/server/mariadb_config.json
 pico/mqtt_config.json
 pico/wifi_config.json

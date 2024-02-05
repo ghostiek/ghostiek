@@ -92,7 +92,7 @@ def pretty_plot(data, is_pi):
     ttl.set_weight('bold')
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f'{dir_path}/graphs/plot-{datetime.now()}.png')
+    plt.savefig(f"{dir_path}/graphs/plot-{datetime.now().strftime('%Y-%m-%d_%H')}.png")
     # Show the graph
     if not is_pi:
         plt.show()

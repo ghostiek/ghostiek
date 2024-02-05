@@ -90,6 +90,9 @@ def pretty_plot(data, is_pi):
     # tweak the title
     ttl = ax.title
     ttl.set_weight('bold')
+    
+    # Fixing xlabels
+    fig.autofmt_xdate()
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
     plt.savefig(f"{dir_path}/graphs/plot-{datetime.now().strftime('%Y-%m-%d_%H')}.png")

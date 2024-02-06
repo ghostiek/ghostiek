@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import matplotlib.dates as dts
+import matplotlib.dates as md
 import Pi.db.db_utils as db
 import json
 import os
@@ -37,9 +37,10 @@ def light_plot(data, is_pi):
     # Smoothing the data
     df_all["Distance"] = df_all["Distance"].rolling(window=150).mean()
     # Today's data, still needed for local data, would remove this redundant line later on
-    df = df_all[(date.today() > df_all["Timestamp"].dt.date) & (df_all["Timestamp"].dt.date >= date.today()-timedelta(days=1))]
+    min_date = date.today()-timedelta(days=1)
+    df = df_all[(date.today() > df_all["Timestamp"].dt.date) & (df_all["Timestamp"].dt.date >= min_date)]
     # Add the line over the area with the plot function
-    fig = plt.figure(figsize=[7, 5])
+    fig = plt.figure(figsize=[14, 10])
     ax = plt.subplot(111)
 
     # Fill the area with fill_between
@@ -49,7 +50,7 @@ def light_plot(data, is_pi):
     # set the basic properties
     ax.set_xlabel('Timestamp')
     ax.set_ylabel('Sensor Distance from Computer (in cm)')
-    ax.set_title("Time Spent on Computer")
+    ax.set_title(f"Time Spent on Computer Yesterday")
     ax.set_xlim(df["Timestamp"].min(), df["Timestamp"].max())
     ax.set_ylim(0, df["Distance"].max() + 30)
     # set the grid on
@@ -84,6 +85,9 @@ def light_plot(data, is_pi):
     ttl.set_weight('bold')
 
     # Fixing xlabels
+    ax.xaxis.set_major_locator(md.MinuteLocator(byminute=[0, 60]))
+    ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+    #plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
     fig.autofmt_xdate()
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))

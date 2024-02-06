@@ -10,8 +10,8 @@ pi_path = path.parent.absolute()
 root_path = path.parent.parent.absolute()
 readme_path = f"{root_path}/README.md"
 output_path = f"{path}/output.md"
-
 graphs_path = "graphs"
+todays_date = datetime.today().strftime('%Y-%m-%d')
 
 try:
     with open(f"{pi_path}/pi_info.json", "r") as pi_info_file:
@@ -25,8 +25,8 @@ data = get_data(is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 
-light_image_url = f"{graphs_path}/light-plot-{datetime.today().strftime('%Y-%m-%d')}.png"
-dark_image_url = f"{graphs_path}/dark-plot-{datetime.today().strftime('%Y-%m-%d')}.png"
+light_image_url = f"{graphs_path}/light-plot-{todays_date}.png"
+dark_image_url = f"{graphs_path}/dark-plot-{todays_date}.png"
 
 
 
@@ -42,7 +42,8 @@ I'm a Data Scientist and I love learning about Statistics.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="{dark_image_url}">
   <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
-  <img alt="Shows a black logo in light color mode and a white one in dark color mode."src="{light_image_url}">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_image_url}">
+  <figcaption>Data from {todays_date}</figcaption>
 </picture>
 """
 

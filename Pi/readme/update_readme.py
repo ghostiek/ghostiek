@@ -20,14 +20,13 @@ try:
 except FileNotFoundError:
     is_pi = False
     data = get_data(is_pi)
-    pretty_plot(data, is_pi)
 
 data = get_data(is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 
-light_image_url = f"{graphs_path}/light-plot-{datetime.today().strftime('%Y-%m-%d_%H')}.png"
-dark_image_url = f"{graphs_path}/dark-plot-{datetime.today().strftime('%Y-%m-%d_%H')}.png"
+light_image_url = f"{graphs_path}/light-plot-{datetime.today().strftime('%Y-%m-%d')}.png"
+dark_image_url = f"{graphs_path}/dark-plot-{datetime.today().strftime('%Y-%m-%d')}.png"
 
 
 
@@ -43,11 +42,12 @@ I'm a Data Scientist and I love learning about Statistics.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="{dark_image_url}">
   <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
-  <img alt="Shows a black logo in light color mode and a white one in dark color mode."src="graphs/plot-2024-02-04 13:27:35.175387.png">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode."src="{light_image_url}">
 </picture>
 """
 
 with open(output_path, "w", encoding="utf-8") as output_file:
     output_file.write(readme_text)
+    print("File Written Successfully")
 
-print(readme_text)
+# print(readme_text)

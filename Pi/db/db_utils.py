@@ -1,3 +1,5 @@
+import datetime
+
 import mariadb
 import sys
 import json
@@ -31,8 +33,9 @@ def send_data(conn, cur, dist):
     conn.commit()
 
 
-def read_data(conn, cur):
+def read_data(conn, cur, start_date):
+    start_date = start_date.strtime("%Y-%m-%d")
     # Get Cursor
-    cur.execute("SELECT * FROM sensordb.time_on_pc;")
+    cur.execute(f"SELECT * FROM sensordb.time_on_pc WHERE timestamp_column > '{start_date}';")
     result = cur.fetchall()
     return result

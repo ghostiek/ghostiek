@@ -1,5 +1,5 @@
 [Unit]
-Description=Service that updates the plot
+Description=Service that updates the plots and readme file
 Wants=network-online.target
 After=network-online.target
 

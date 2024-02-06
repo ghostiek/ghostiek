@@ -5,10 +5,10 @@ import json
 import os
 from pathlib import Path
 import pandas as pd
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 
-def get_data(is_pi=False):
+def get_data(is_pi=False, date_filter=date.today() - timedelta(days=1)):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file_path = "data.json"
     if not is_pi:
@@ -21,23 +21,23 @@ def get_data(is_pi=False):
     parent_path = path.parent.absolute()
     conn = db.connect_db(f"{parent_path}/db/mariadb_config.json")
     cur = conn.cursor()
-    data = db.read_data(conn, cur)
+    data = db.read_data(conn, cur, date_filter)
     conn.close()
 
     with open(f"{path}/{file_path}", "w") as data_file:
         json.dump(data, data_file, indent=4, sort_keys=True, default=str)
     return data
 
+
 def light_plot(data, is_pi):
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
-    df_all = pd.DataFrame({"TimestampString":dates, "Distance": distance})
+    df_all = pd.DataFrame({"TimestampString": dates, "Distance": distance})
     df_all["Timestamp"] = pd.to_datetime(df_all["TimestampString"], format="%Y-%m-%d %H:%M:%S")
     # Smoothing the data
-    df_all["Distance"] = df_all["Distance"].rolling(window=100).mean()
-    # Today's data
-    df = df_all[df_all["Timestamp"].dt.date >= date.today()]
-
+    df_all["Distance"] = df_all["Distance"].rolling(window=150).mean()
+    # Today's data, still needed for local data, would remove this redundant line later on
+    df = df_all[(date.today() > df_all["Timestamp"].dt.date) & (df_all["Timestamp"].dt.date >= date.today()-timedelta(days=1))]
     # Add the line over the area with the plot function
     fig = plt.figure(figsize=[7, 5])
     ax = plt.subplot(111)
@@ -51,7 +51,7 @@ def light_plot(data, is_pi):
     ax.set_ylabel('Sensor Distance from Computer (in cm)')
     ax.set_title("Time Spent on Computer")
     ax.set_xlim(df["Timestamp"].min(), df["Timestamp"].max())
-    ax.set_ylim(0, df["Distance"].max()+30)
+    ax.set_ylim(0, df["Distance"].max() + 30)
     # set the grid on
     ax.grid('on')
 
@@ -82,15 +82,16 @@ def light_plot(data, is_pi):
     # tweak the title
     ttl = ax.title
     ttl.set_weight('bold')
-    
+
     # Fixing xlabels
     fig.autofmt_xdate()
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f"{dir_path}/graphs/light-plot-{datetime.now().strftime('%Y-%m-%d_%H')}.png")
+    plt.savefig(f"{dir_path}/graphs/light-plot-{datetime.now().strftime('%Y-%m-%d')}.png")
     # Show the graph
     if not is_pi:
         plt.show()
+
 
 def dark_plot(data, is_pi):
     return

@@ -11,7 +11,7 @@ root_path = path.parent.parent.absolute()
 readme_path = f"{root_path}/README.md"
 output_path = f"{path}/output.md"
 
-graphs_path = "graphs/"
+graphs_path = "graphs"
 
 try:
     with open(f"{pi_path}/pi_info.json", "r") as pi_info_file:

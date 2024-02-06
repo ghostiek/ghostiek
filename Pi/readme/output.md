@@ -7,7 +7,7 @@ I'm a Data Scientist and I love learning about Statistics.
 
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="graphs//dark-plot-2024-02-05_00.png">
-  <source media="(prefers-color-scheme: light)" srcset="graphs//light-plot-2024-02-05_00.png">
+  <source media="(prefers-color-scheme: dark)" srcset="graphs/dark-plot-2024-02-05_00.png">
+  <source media="(prefers-color-scheme: light)" srcset="graphs/light-plot-2024-02-05_00.png">
   <img alt="Shows a black logo in light color mode and a white one in dark color mode."src="graphs/plot-2024-02-04 13:27:35.175387.png">
 </picture>

@@ -1,0 +1,11 @@
+[Unit]
+Description=Service that updates the plots and readme file
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/pi/Desktop/ghostiek
+ExecStart=/home/pi/Desktop/ghostiek/venv/bin/python -m Pi.readme.update_readme
+
+[Install]
+WantedBy=multi-user.target

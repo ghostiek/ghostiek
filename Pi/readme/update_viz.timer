@@ -1,9 +1,0 @@
-[Unit]
-Description=Service that updates the plots and readme file
-
-[Timer]
-OnCalendar=*-*-* 01:00:00
-Persistant=true
-
-[Install]
-WantedBy=timers.target

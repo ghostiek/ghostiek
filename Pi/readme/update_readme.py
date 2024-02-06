@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from datetime import date
+from datetime import datetime
 from Pi.readme.visualisation import get_data, light_plot, dark_plot
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -26,8 +26,8 @@ data = get_data(is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 
-light_image_url = f"{graphs_path}/light-plot-{date.today().strftime('%Y-%m-%d_%H')}.png"
-dark_image_url = f"{graphs_path}/dark-plot-{date.today().strftime('%Y-%m-%d_%H')}.png"
+light_image_url = f"{graphs_path}/light-plot-{datetime.today().strftime('%Y-%m-%d_%H')}.png"
+dark_image_url = f"{graphs_path}/dark-plot-{datetime.today().strftime('%Y-%m-%d_%H')}.png"
 
 
 

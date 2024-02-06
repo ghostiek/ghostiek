@@ -28,21 +28,13 @@ def get_data(is_pi=False):
         json.dump(data, data_file, indent=4, sort_keys=True, default=str)
     return data
 
-
-def plot(data):
-    dates0 = [x[1] for x in data]
-    dates = dts.date2num(dates0)
-    distance = [x[2] for x in data]
-    ax = plt.plot_date(dates, distance)
-    plt.xlim(dates[-75], dates[-5])
-    plt.show()
-
-
 def pretty_plot(data, is_pi):
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
     df_all = pd.DataFrame({"TimestampString":dates, "Distance": distance})
     df_all["Timestamp"] = pd.to_datetime(df_all["TimestampString"], format="%Y-%m-%d %H:%M:%S")
+    # Smoothing the data
+    df_all["Distance"] = df_all["Distance"].rolling(window=100).mean()
     # Today's data
     df = df_all[df_all["Timestamp"].dt.date >= date.today()]
 
@@ -56,7 +48,7 @@ def pretty_plot(data, is_pi):
     # Control the title of each facet
     # set the basic properties
     ax.set_xlabel('Timestamp')
-    ax.set_ylabel('Distance from Computer')
+    ax.set_ylabel('Sensor Distance from Computer (in cm)')
     ax.set_title("Time Spent on Computer")
     ax.set_xlim(df["Timestamp"].min(), df["Timestamp"].max())
     ax.set_ylim(0, df["Distance"].max()+30)

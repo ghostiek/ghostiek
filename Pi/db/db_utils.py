@@ -34,7 +34,7 @@ def send_data(conn, cur, dist):
 
 
 def read_data(conn, cur, start_date):
-    start_date = start_date.strtime("%Y-%m-%d")
+    start_date = start_date.strftime("%Y-%m-%d")
     # Get Cursor
     cur.execute(f"SELECT * FROM sensordb.time_on_pc WHERE timestamp_column > '{start_date}';")
     result = cur.fetchall()

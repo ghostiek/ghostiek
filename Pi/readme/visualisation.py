@@ -28,7 +28,7 @@ def get_data(is_pi=False):
         json.dump(data, data_file, indent=4, sort_keys=True, default=str)
     return data
 
-def pretty_plot(data, is_pi):
+def light_plot(data, is_pi):
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
     df_all = pd.DataFrame({"TimestampString":dates, "Distance": distance})
@@ -92,6 +92,9 @@ def pretty_plot(data, is_pi):
     if not is_pi:
         plt.show()
 
+def dark_plot(data, is_pi):
+    return
+
 
 if __name__ == "__main__":
     # Check hostname
@@ -105,4 +108,4 @@ if __name__ == "__main__":
     except FileNotFoundError:
         is_pi = False
     data = get_data(is_pi)
-    pretty_plot(data, is_pi)
+    light_plot(data, is_pi)

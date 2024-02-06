@@ -38,13 +38,14 @@ I'm a Data Scientist and I love learning about Statistics.
 
 ## So here's some data about me (☞ﾟヮﾟ)☞
 
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="{dark_image_url}">
-  <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
-  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_image_url}">
+<figure>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="{dark_image_url}">
+    <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
+    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_image_url}">
+  </picture>
   <figcaption>Data from {todays_date}</figcaption>
-</picture>
+</figure>
 """
 
 with open(output_path, "w", encoding="utf-8") as output_file:

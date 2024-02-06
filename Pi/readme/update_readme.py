@@ -44,7 +44,7 @@ I'm a Data Scientist and I love learning about Statistics.
     <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
     <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_image_url}">
   </picture>
-  <figcaption>Data from {todays_date}</figcaption>
+  <figcaption>Fig 1. Sensor Data from {todays_date}</figcaption>
 </figure>
 """
 

@@ -28,11 +28,11 @@ data = get_data(is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 
-light_image_name = "light-plot-{yesterdays_date}.png"
+light_image_name = f"light-plot-{yesterdays_date}.png"
 light_image_url = f"{graphs_path}/{light_image_name}"
 
-dark_image_name = "dark-plot-{yesterdays_date}.png"
-dark_image_url = "{graphs_path}/{dark_image_name}"
+dark_image_name = f"dark-plot-{yesterdays_date}.png"
+dark_image_url = f"{graphs_path}/{dark_image_name}"
 
 
 
@@ -63,10 +63,11 @@ print(readme_text)
 output_path = f"{dir_path}/output.md"
 plots_path = f"{dir_path}/graphs/"
 data_path = f"{dir_path}/data.json"
-files = [output_path, plots_path]
+files = [output_path, plots_path, data_path]
 commit_message = "Automated Update"
 repo = Repo(git_repo_path)
+repo.git.pull()
 repo.git.add(files)
 repo.index.commit(commit_message)
 origin = repo.remote(name="origin")
-origin.push
+origin.push()

@@ -91,7 +91,7 @@ def light_plot(data, is_pi):
     fig.autofmt_xdate()
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f"{dir_path}/graphs/light-plot-{datetime.now().strftime('%Y-%m-%d')}.png")
+    plt.savefig(f"{dir_path}/graphs/light-plot-{(datetime.now()-timedelta(days=1)).strftime('%Y-%m-%d')}.png")
     # Show the graph
     if not is_pi:
         plt.show()

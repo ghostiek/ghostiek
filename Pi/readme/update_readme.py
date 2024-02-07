@@ -1,8 +1,10 @@
 import json
 import os
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from Pi.readme.visualisation import get_data, light_plot, dark_plot
+from git import Repo
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 path = Path(dir_path)
@@ -11,7 +13,8 @@ root_path = path.parent.parent.absolute()
 readme_path = f"{root_path}/README.md"
 output_path = f"{path}/output.md"
 graphs_path = "graphs"
-todays_date = datetime.today().strftime('%Y-%m-%d')
+yesterdays_date = (datetime.today()-timedelta(days=1)).strftime('%Y-%m-%d')
+git_repo_path = f"{root_path}/.git"
 
 try:
     with open(f"{pi_path}/pi_info.json", "r") as pi_info_file:
@@ -25,8 +28,12 @@ data = get_data(is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 
-light_image_url = f"{graphs_path}/light-plot-{todays_date}.png"
-dark_image_url = f"{graphs_path}/dark-plot-{todays_date}.png"
+light_image_name = "light-plot-{yesterdays_date}.png"
+light_image_url = f"{graphs_path}/{light_image_name}"
+
+dark_image_name = "dark-plot-{yesterdays_date}.png"
+dark_image_url = "{graphs_path}/{dark_image_name}"
+
 
 
 
@@ -44,7 +51,7 @@ I'm a Data Scientist and I love learning about Statistics.
     <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
     <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_image_url}">
   </picture>
-  <figcaption>Fig 1. Sensor Data from {todays_date}</figcaption>
+  <figcaption>Fig 1. Sensor Data from {yesterdays_date}</figcaption>
 </figure>
 """
 
@@ -52,4 +59,14 @@ with open(output_path, "w", encoding="utf-8") as output_file:
     output_file.write(readme_text)
     print("File Written Successfully")
 
-# print(readme_text)
+print(readme_text)
+output_path = f"{dir_path}/output.md"
+plots_path = f"{dir_path}/graphs/"
+data_path = f"{dir_path}/data.json"
+files = [output_path, plots_path]
+commit_message = "Automated Update"
+repo = Repo(git_repo_path)
+repo.git.add(files)
+repo.index.commit(commit_message)
+origin = repo.remote(name="origin")
+origin.push

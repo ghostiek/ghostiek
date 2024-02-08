@@ -39,7 +39,6 @@ def plot(data, is_pi, color):
     df_all["Distance"] = df_all["Distance"].rolling(window=timedelta(hours=0.25), center=True).mean()
     # Today's data, still needed for local data, would remove this redundant line later on
     min_date = date.today() - timedelta(days=1)
-    # df = df_all[(date.today() > df_all["Timestamp"].dt.date) & (df_all["Timestamp"].dt.date >= min_date)]
     df = df_all[(df_all["Timestamp"].dt.date >= min_date) & (date.today() > df_all["Timestamp"].dt.date)]
     # Add the line over the area with the plot function
     fig = plt.figure(figsize=[14, 10])

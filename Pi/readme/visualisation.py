@@ -29,22 +29,24 @@ def get_data(is_pi=False, date_filter=date.today() - timedelta(days=1)):
     return data
 
 
-def light_plot(data, is_pi):
+def plot(data, is_pi, color):
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
     df_all = pd.DataFrame({"TimestampString": dates, "Distance": distance})
     df_all["Timestamp"] = pd.to_datetime(df_all["TimestampString"], format="%Y-%m-%d %H:%M:%S")
+    df_all.index = df_all["Timestamp"]
     # Smoothing the data
-    df_all["Distance"] = df_all["Distance"].rolling(window=150).mean()
+    df_all["Distance"] = df_all["Distance"].rolling(window=timedelta(hours=0.25), center=True).mean()
     # Today's data, still needed for local data, would remove this redundant line later on
-    min_date = date.today()-timedelta(days=1)
-    df = df_all[(date.today() > df_all["Timestamp"].dt.date) & (df_all["Timestamp"].dt.date >= min_date)]
+    min_date = date.today() - timedelta(days=1)
+    # df = df_all[(date.today() > df_all["Timestamp"].dt.date) & (df_all["Timestamp"].dt.date >= min_date)]
+    df = df_all[(df_all["Timestamp"].dt.date >= min_date) & (date.today() > df_all["Timestamp"].dt.date)]
     # Add the line over the area with the plot function
     fig = plt.figure(figsize=[14, 10])
     ax = plt.subplot(111)
 
     # Fill the area with fill_between
-    l = ax.fill_between(df['Timestamp'], df['Distance'], alpha=0.2)
+    l = ax.fill_between(df['Timestamp'], df['Distance'], alpha=1)
 
     # Control the title of each facet
     # set the basic properties
@@ -55,21 +57,17 @@ def light_plot(data, is_pi):
     ax.set_ylim(0, df["Distance"].max() + 30)
     # set the grid on
     ax.grid('on')
-
+    # change the edge color (bluish and transparentish) and thickness
+    # l.set_edgecolors([[0, 0, .5, .3]])
+    # ax.spines['right'].set_color((.8, .8, .8))
+    # ax.spines['top'].set_color((.8, .8, .8))
     l.set_facecolors([[.5, .5, .8, .3]])
-    #
-    # # change the edge color (bluish and transparentish) and thickness
-    l.set_edgecolors([[0, 0, .5, .3]])
     l.set_linewidths([3])
 
     # remove tick marks
     ax.xaxis.set_tick_params(size=0)
     ax.yaxis.set_tick_params(size=0)
 
-    # change the color of the top and right spines to opaque gray
-
-    ax.spines['right'].set_color((.8, .8, .8))
-    ax.spines['top'].set_color((.8, .8, .8))
 
     # tweak the axis labels
     xlab = ax.xaxis.get_label()
@@ -87,18 +85,23 @@ def light_plot(data, is_pi):
     # Fixing xlabels
     ax.xaxis.set_major_locator(md.MinuteLocator(byminute=[0, 60]))
     ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-    #plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
+    # plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
     fig.autofmt_xdate()
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f"{dir_path}/graphs/light-plot-{(datetime.now()-timedelta(days=1)).strftime('%Y-%m-%d')}.png")
+    plt.savefig(f"{dir_path}/graphs/{color}-plot-{datetime.now().strftime('%Y-%m-%d')}.png")
     # Show the graph
     if not is_pi:
         plt.show()
 
 
+def light_plot(data, is_pi):
+    plot(data, is_pi, "light")
+
+
 def dark_plot(data, is_pi):
-    return
+    plt.style.use('dark_background')
+    plot(data, is_pi, "dark")
 
 
 if __name__ == "__main__":
@@ -114,3 +117,4 @@ if __name__ == "__main__":
         is_pi = False
     data = get_data(is_pi)
     light_plot(data, is_pi)
+    dark_plot(data, is_pi)

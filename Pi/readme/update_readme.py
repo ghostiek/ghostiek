@@ -11,7 +11,6 @@ path = Path(dir_path)
 pi_path = path.parent.absolute()
 root_path = path.parent.parent.absolute()
 readme_path = f"{root_path}/README.md"
-output_path = f"{path}/output.md"
 graphs_path = "graphs"
 yesterdays_date = (datetime.today()-timedelta(days=1)).strftime('%Y-%m-%d')
 git_repo_path = f"{root_path}/.git"
@@ -55,15 +54,13 @@ I'm a Data Scientist and I love learning about Statistics.
 </figure>
 """
 
-with open(output_path, "w", encoding="utf-8") as output_file:
+with open(readme_path, "w", encoding="utf-8") as output_file:
     output_file.write(readme_text)
     print("File Written Successfully")
 
-print(readme_text)
-output_path = f"{root_path}/README.md"
 plots_path = f"{dir_path}/graphs/"
 data_path = f"{dir_path}/data.json"
-files = [output_path, plots_path, data_path]
+files = [readme_path, plots_path, data_path]
 commit_message = "Automated Update"
 repo = Repo(git_repo_path)
 repo.git.pull()

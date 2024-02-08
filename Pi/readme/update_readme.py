@@ -60,7 +60,7 @@ with open(output_path, "w", encoding="utf-8") as output_file:
     print("File Written Successfully")
 
 print(readme_text)
-output_path = f"{dir_path}/output.md"
+output_path = f"{root_path}/README.md"
 plots_path = f"{dir_path}/graphs/"
 data_path = f"{dir_path}/data.json"
 files = [output_path, plots_path, data_path]

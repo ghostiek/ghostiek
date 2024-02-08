@@ -11,7 +11,7 @@ path = Path(dir_path)
 pi_path = path.parent.absolute()
 root_path = path.parent.parent.absolute()
 readme_path = f"{root_path}/README.md"
-graphs_path = "graphs"
+graphs_path = "Pi/readme/graphs"
 yesterdays_date = (datetime.today()-timedelta(days=1)).strftime('%Y-%m-%d')
 git_repo_path = f"{root_path}/.git"
 
@@ -63,7 +63,6 @@ data_path = f"{dir_path}/data.json"
 files = [readme_path, plots_path, data_path]
 commit_message = "Automated Update"
 repo = Repo(git_repo_path)
-repo.git.pull()
 repo.git.add(files)
 repo.index.commit(commit_message)
 origin = repo.remote(name="origin")

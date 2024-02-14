@@ -29,17 +29,32 @@ def get_data(is_pi=False, date_filter=date.today() - timedelta(days=1)):
     return data
 
 
-def plot(data, is_pi, color):
+def preprocess_data(data):
+    # Every 15 mins
+    hours_period = 0.25
     dates = [x[1] for x in data]
     distance = [x[2] for x in data]
     df_all = pd.DataFrame({"TimestampString": dates, "Distance": distance})
     df_all["Timestamp"] = pd.to_datetime(df_all["TimestampString"], format="%Y-%m-%d %H:%M:%S")
     df_all.index = df_all["Timestamp"]
     # Smoothing the data
-    df_all["Distance"] = df_all["Distance"].rolling(window=timedelta(hours=0.25), center=True).mean()
+    df_all["Distance"] = df_all["Distance"].rolling(window=timedelta(hours=hours_period), center=True).mean()
     # Today's data, still needed for local data, would remove this redundant line later on
     min_date = date.today() - timedelta(days=1)
     df = df_all[(df_all["Timestamp"].dt.date >= min_date) & (date.today() > df_all["Timestamp"].dt.date)]
+    df["on_pc"] = df["Distance"] < 90
+    return df
+
+
+def on_pc_plot(df, is_pi):
+    ax = plt.subplot(111)
+    ax.bar(df["Timestamp"], df["Distance"])
+    ax.xaxis_date()
+    if not is_pi:
+        plt.show()
+
+
+def sensor_plot(df, is_pi, color):
     # Add the line over the area with the plot function
     fig = plt.figure(figsize=[14, 10])
     ax = plt.subplot(111)
@@ -66,7 +81,6 @@ def plot(data, is_pi, color):
     # remove tick marks
     ax.xaxis.set_tick_params(size=0)
     ax.yaxis.set_tick_params(size=0)
-
 
     # tweak the axis labels
     xlab = ax.xaxis.get_label()
@@ -95,12 +109,12 @@ def plot(data, is_pi, color):
 
 
 def light_plot(data, is_pi):
-    plot(data, is_pi, "light")
+    sensor_plot(data, is_pi, "light")
 
 
 def dark_plot(data, is_pi):
     plt.style.use('dark_background')
-    plot(data, is_pi, "dark")
+    sensor_plot(data, is_pi, "dark")
 
 
 if __name__ == "__main__":

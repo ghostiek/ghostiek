@@ -55,6 +55,8 @@ def on_pc_plot(df, is_pi):
 
 
 def sensor_plot(df, is_pi, color):
+    # Adding threshold to detect if on PC
+    df["on_pc"] = df["Distance"] < 70
     # Add the line over the area with the plot function
     fig = plt.figure(figsize=[14, 10])
     ax = plt.subplot(111)

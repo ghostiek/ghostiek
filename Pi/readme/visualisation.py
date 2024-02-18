@@ -42,9 +42,11 @@ def preprocess_data(df, date_filter):
     hours_period = 0.25
     df["Timestamp"] = pd.to_datetime(df["TimestampString"], format="%Y-%m-%d %H:%M:%S")
     df.index = df["Timestamp"]
+    df = df[(df["Timestamp"].dt.date >= min_date) & (df["Timestamp"].dt.date < max_date)]
     # Smoothing the data
     df["Distance"] = df["Distance"].rolling(window=timedelta(hours=hours_period), center=True).mean()
-    df.loc[df["Timestamp"]>'2024-02-16 19:00:00', "Distance"] = 24
+    # Only kept for testing purposes, remove later
+    #df.loc[df["Timestamp"]>'2024-02-16 19:00:00', "Distance"] = 24
     df["on_pc"] = (df["Distance"] > LOWER_LIMIT) & (df["Distance"] < HIGHER_LIMIT)
     return df
 
@@ -113,7 +115,7 @@ def sensor_plot(df, is_pi, color):
     ax.legend(["Time Off PC", "Time On PC"], loc="best", edgecolor="black")
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f"{dir_path}/graphs/{color}-plot-{datetime.now().strftime('%Y-%m-%d')}.png")
+    plt.savefig(f"{dir_path}/graphs/{color}-plot-{df['Timestamp'].min().strftime('%Y-%m-%d')}.png")
     # Show the graph
     if not is_pi:
         plt.show()

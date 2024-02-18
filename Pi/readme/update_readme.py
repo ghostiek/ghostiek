@@ -23,7 +23,6 @@ except FileNotFoundError:
     data = get_data(is_pi)
 
 raw_data = get_data(is_pi)
-data = preprocess_data(raw_data)
 #on_pc_plot(data. is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)

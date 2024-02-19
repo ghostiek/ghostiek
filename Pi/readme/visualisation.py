@@ -45,20 +45,8 @@ def preprocess_data(df, date_filter):
     df = df[(df["Timestamp"].dt.date >= min_date) & (df["Timestamp"].dt.date < max_date)]
     # Smoothing the data
     df["Distance"] = df["Distance"].rolling(window=timedelta(hours=hours_period), center=True).mean()
-    # Only kept for testing purposes, remove later
-    #df.loc[df["Timestamp"]>'2024-02-16 19:00:00', "Distance"] = 24
     df["on_pc"] = (df["Distance"] > LOWER_LIMIT) & (df["Distance"] < HIGHER_LIMIT)
     return df
-
-
-def on_pc_plot(df, is_pi):
-    ax = plt.subplot(111)
-    ax.plot(df["Timestamp"], df["on_pc"].astype(int))
-    # Fixing xlabels
-    ax.xaxis.set_major_locator(md.MinuteLocator(byminute=[0, 60]))
-    ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-    if not is_pi:
-        plt.show()
 
 
 def sensor_plot(df, is_pi, color):

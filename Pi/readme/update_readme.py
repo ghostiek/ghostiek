@@ -2,7 +2,7 @@ import json
 import os
 from pathlib import Path
 from datetime import datetime, timedelta
-from Pi.readme.visualisation import get_data, preprocess_data, light_plot, dark_plot, on_pc_plot
+from Pi.readme.visualisation import get_data, light_plot, dark_plot
 from git import Repo
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -23,7 +23,6 @@ except FileNotFoundError:
     data = get_data(is_pi)
 
 data = get_data(is_pi)
-#on_pc_plot(data. is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 

@@ -1,15 +1,13 @@
-from Pi.readme.visualisation import get_data
+import pandas as pd
 from datetime import datetime, timedelta
 
 
-def get_cumulative_times():
-    data = get_data()
-
-    max_time = datetime.today()
+def get_cumulative_times(data: pd.DataFrame, delay: int = 0):
+    max_time = datetime.today() - timedelta(days=delay)
     max_time = max_time.replace(hour=0, minute=0, second=0, microsecond=0)
-    current_time = max_time - timedelta(days=1)
+    current_time = max_time - timedelta(days=1) - timedelta(days=delay)
 
-    # Turn dataframe to list of list for optimized looping
+    # Turn dataframe to list of list for optimized looping, 10x speedup over iloc loop
     elements = list(map(list, data.itertuples(index=False)))
 
     # Get column indexes

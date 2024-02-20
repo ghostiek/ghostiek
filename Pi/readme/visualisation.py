@@ -44,8 +44,8 @@ def preprocess_data(df, date_filter):
     df.index = df["Timestamp"]
     df = df[(df["Timestamp"].dt.date >= min_date) & (df["Timestamp"].dt.date < max_date)]
     # Smoothing the data
-    df["Distance"] = df["Distance"].rolling(window=timedelta(hours=hours_period), center=True).mean()
-    df["on_pc"] = (df["Distance"] > LOWER_LIMIT) & (df["Distance"] < HIGHER_LIMIT)
+    df["DistanceSmooth"] = df["Distance"].rolling(window=timedelta(hours=hours_period), center=True).mean()
+    df["on_pc"] = (df["DistanceSmooth"] > LOWER_LIMIT) & (df["DistanceSmooth"] < HIGHER_LIMIT)
     return df
 
 
@@ -55,8 +55,8 @@ def sensor_plot(df, is_pi, color):
     ax = plt.subplot(111)
 
     # Fill the area with fill_between
-    l = ax.fill_between(df['Timestamp'], df['Distance'], where=~df["on_pc"], alpha=1)
-    l2 = ax.fill_between(df['Timestamp'], df['Distance'], where=df["on_pc"], facecolor="red", alpha=0.5)
+    l = ax.fill_between(df['Timestamp'], df['DistanceSmooth'], where=~df["on_pc"], alpha=1)
+    l2 = ax.fill_between(df['Timestamp'], df['DistanceSmooth'], where=df["on_pc"], facecolor="red", alpha=0.5)
 
     # Control the title of each facet
     # set the basic properties
@@ -64,7 +64,7 @@ def sensor_plot(df, is_pi, color):
     ax.set_ylabel('Sensor Distance from Computer (in cm)')
     ax.set_title(f"Time Spent on Computer Yesterday")
     ax.set_xlim(df["Timestamp"].min(), df["Timestamp"].max())
-    ax.set_ylim(0, df["Distance"].max() + 30)
+    ax.set_ylim(0, df["DistanceSmooth"].max() + 30)
     # set the grid on
     ax.grid('on')
     # change the edge color (bluish and transparentish) and thickness

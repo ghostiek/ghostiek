@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
+from matplotlib.transforms import Bbox
 import matplotlib.dates as md
 import Pi.db.db_utils as db
+import Pi.readme.time_on_pc as tp
 import json
 import os
 from pathlib import Path
 import pandas as pd
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 
 LOWER_LIMIT = 10
 HIGHER_LIMIT = 70
@@ -103,19 +105,53 @@ def sensor_plot(df, is_pi, color):
     ax.legend(["Time Off PC", "Time On PC"], loc="best", edgecolor="black")
     # Save figure
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    plt.savefig(f"{dir_path}/graphs/{color}-plot-{df['Timestamp'].min().strftime('%Y-%m-%d')}.png")
+    plt.savefig(f"{dir_path}/graphs/lineplot/{color}-plot-{df['Timestamp'].min().strftime('%Y-%m-%d')}.png")
     # Show the graph
+    if not is_pi:
+        plt.show()
+
+
+def percentage_plot(df, is_pi, color):
+    HEIGHT = 0.2
+    LABELS = ["On PC", "Not on PC"]
+    COLORS = {"On PC": [1,0,0,0.5], "Not on PC": [.5, .5, .8]}
+
+    x = tp.get_cumulative_times(df)
+    # Not on PC
+    time1 = x[0].total_seconds()
+    # On PC
+    time2 = x[1].total_seconds()
+    total = time1 + time2
+    # plt.bar(["On PC", "Not On PC"], [x1.total_seconds() for x1 in x])
+    # Make thinner, remove grid, add title maybe? fix colors
+    fig = plt.figure(figsize=[14, 10])
+    ax = plt.subplot(111)
+    hbar = ax.barh([0], 100 * time1 / total, height=HEIGHT, facecolor="red", alpha=0.5)
+    ax.bar_label(hbar, fmt='%.0f%%', label_type="center", fontsize=16)
+    ax.barh([0], 100 * time2 / total, height=HEIGHT, color=[.5, .5, .8], left=100 * time1 / total)
+    plt.xlim(0, 100)
+    plt.ylim(0, 0.5)
+    frame1 = plt.gca()
+    ax.spines[['left', 'top', 'right']].set_visible(False)
+    # frame1.axes.get_xaxis().set_visible(False)
+    frame1.axes.get_yaxis().set_visible(False)
+    plt.xlabel('Percentage', fontsize=16)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=COLORS[label]) for label in LABELS]
+    plt.legend(handles, LABELS, bbox_to_anchor=(0, 0.06), loc="lower right")
+    plt.savefig(f"graphs/barplot/{color}-plot-{df['Timestamp'].min().strftime('%Y-%m-%d')}.png", bbox_inches=Bbox([[0.5, 0.5], [14, 3]]))
     if not is_pi:
         plt.show()
 
 
 def light_plot(df, is_pi):
     sensor_plot(df, is_pi, "light")
+    percentage_plot(df, is_pi, "light")
 
 
 def dark_plot(df, is_pi):
     plt.style.use('dark_background')
     sensor_plot(df, is_pi, "dark")
+    percentage_plot(df, is_pi, "dark")
 
 
 if __name__ == "__main__":
@@ -129,7 +165,6 @@ if __name__ == "__main__":
         is_pi = os.uname().nodename == pi_info["hostname"]
     except FileNotFoundError:
         is_pi = False
-    data = get_data(is_pi, 3)
+    data = get_data(is_pi, 1)
     light_plot(data, is_pi)
     dark_plot(data, is_pi)
-    # on_pc_plot(data, is_pi)

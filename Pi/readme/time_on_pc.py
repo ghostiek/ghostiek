@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime, timedelta
-
+from matplotlib.transforms import Bbox
 
 def get_cumulative_times(data: pd.DataFrame, delay: int = 0):
     max_time = datetime.today() - timedelta(days=delay)
@@ -37,13 +37,12 @@ def get_cumulative_times(data: pd.DataFrame, delay: int = 0):
 
 
 if __name__ == "__main__":
+    HEIGHT = 0.2
     from Pi.readme.visualisation import get_data
     import matplotlib.pyplot as plt
-    data = get_data(False, 2)
-    result = -data['Timestamp'].where(data['on_pc']).diff(periods=-1).sum()
-    print(result)
+    data = get_data(False, 1)
 
-    x = get_cumulative_times(data, 1)
+    x = get_cumulative_times(data)
     # Not on PC
     time1 = x[0].total_seconds()
     # On PC
@@ -51,9 +50,17 @@ if __name__ == "__main__":
     total = time1+time2
     #plt.bar(["On PC", "Not On PC"], [x1.total_seconds() for x1 in x])
     # Make thinner, remove grid, add title maybe? fix colors
-    plt.barh([0], (time1 + time2) / total, color="black")
-    plt.barh([0], time2/total, color="red")
-
-
-    #my_pie, _, _ = plt.pie([x1.total_seconds() for x1 in x], radius=1.2, colors=["red", "black"], autopct="%.1f%%")
+    plt.style.use('dark_background')
+    fig = plt.figure(figsize=[14, 10])
+    ax = plt.subplot(111)
+    ax.barh([0], 100*time1/total, height=HEIGHT, facecolor="red", alpha=0.5)
+    ax.barh([0], 100*time2/total, height=HEIGHT, color=[.5, .5, .8], left=100*time1/total)
+    plt.xlim(0, 100)
+    plt.ylim(0, 0.5)
+    frame1 = plt.gca()
+    ax.spines[['left', 'top', 'right']].set_visible(False)
+    #frame1.axes.get_xaxis().set_visible(False)
+    frame1.axes.get_yaxis().set_visible(False)
+    plt.xlabel('Percentage', fontsize=16)
+    plt.savefig("graphs/tmp.png", bbox_inches = Bbox([[0.5,0.5], [14,3]]))
     plt.show()

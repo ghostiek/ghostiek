@@ -11,6 +11,9 @@ pi_path = path.parent.absolute()
 root_path = path.parent.parent.absolute()
 readme_path = f"{root_path}/README.md"
 graphs_path = "Pi/readme/graphs"
+line_graphs = f"{graphs_path}/lineplot"
+bar_graphs = f"{graphs_path}/barplot"
+
 yesterdays_date = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
 git_repo_path = f"{root_path}/.git"
 
@@ -26,11 +29,15 @@ data = get_data(is_pi)
 light_plot(data, is_pi)
 dark_plot(data, is_pi)
 
-light_image_name = f"light-plot-{yesterdays_date}.png"
-light_image_url = f"{graphs_path}/{light_image_name}"
+light_line_graph_name = f"light-plot-{yesterdays_date}.png"
+light_line_graph_url = f"{line_graphs}/{light_line_graph_name}"
+light_bar_graph_url = f"{bar_graphs}/{light_line_graph_name}"
 
-dark_image_name = f"dark-plot-{yesterdays_date}.png"
-dark_image_url = f"{graphs_path}/{dark_image_name}"
+
+dark_line_graph_name = f"dark-plot-{yesterdays_date}.png"
+dark_line_graph_url = f"{line_graphs}/{dark_line_graph_name}"
+dark_bar_graph_url = f"{bar_graphs}/{dark_line_graph_name}"
+
 
 readme_text = f"""
 # Hello there ( ´◔ ω◔`) ノシ
@@ -41,11 +48,20 @@ I'm a Data Scientist and I love learning about Statistics.
 
 <figure>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="{dark_image_url}">
-    <source media="(prefers-color-scheme: light)" srcset="{light_image_url}">
-    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_image_url}">
+    <source media="(prefers-color-scheme: dark)" srcset="{dark_line_graph_url}">
+    <source media="(prefers-color-scheme: light)" srcset="{light_line_graph_url}">
+    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_line_graph_url}">
   </picture>
   <figcaption>Fig 1. Sensor Data from {yesterdays_date}</figcaption>
+</figure>
+
+<figure>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="{dark_bar_graph_url}">
+    <source media="(prefers-color-scheme: light)" srcset="{light_bar_graph_url}">
+    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="{light_bar_graph_url}">
+  </picture>
+  <figcaption>Fig 2. Percentage of Time Spent on the PC on {yesterdays_date}</figcaption>
 </figure>
 """
 

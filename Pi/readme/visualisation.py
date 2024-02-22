@@ -138,7 +138,7 @@ def percentage_plot(df, is_pi, color):
     plt.xlabel('Percentage', fontsize=16)
     handles = [plt.Rectangle((0, 0), 1, 1, color=COLORS[label]) for label in LABELS]
     plt.legend(handles, LABELS, bbox_to_anchor=(0, 0.06), loc="lower right")
-    plt.savefig(f"graphs/barplot/{color}-plot-{df['Timestamp'].min().strftime('%Y-%m-%d')}.png", bbox_inches=Bbox([[0.25, 0.5], [14, 3]]))
+    plt.savefig(f"graphs/barplot/{color}-plot-{df['Timestamp'].min().strftime('%Y-%m-%d')}.png", bbox_inches=Bbox([[0, 0.5], [14, 3]]))
     if not is_pi:
         plt.show()
 

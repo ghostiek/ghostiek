@@ -5,6 +5,8 @@ I'm a Data Scientist and I love learning about Statistics.
 
 ## So here's some data about me (☞ﾟヮﾟ)☞
 
+
+### Distance from the sensor hooked to my desk throughout the day
 <figure>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="Pi/readme/graphs/lineplot/dark-plot-2024-02-21.png">
@@ -14,6 +16,9 @@ I'm a Data Scientist and I love learning about Statistics.
   <figcaption>Fig 1. Sensor Data from 2024-02-21</figcaption>
 </figure>
 
+
+
+### Aggregate Time Spent on the PC
 <figure>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="Pi/readme/graphs/barplot/dark-plot-2024-02-21.png">

@@ -40,9 +40,8 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print(msg.topic + " " + str(msg.payload))
     conn = db.connect_db()
-    cur = conn.cursor()
     data = float(msg.payload)
-    db.send_data(conn, cur, (data,))
+    db.log_distance(conn, (data,))
     conn.close()
 
 

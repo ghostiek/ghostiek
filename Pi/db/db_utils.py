@@ -28,8 +28,15 @@ def connect_db(config_path=f"{dir_path}/mariadb_config.json"):
     return conn
 
 
-def send_data(conn, cur, dist):
+def log_distance(conn, dist):
+    cur = conn.cursor()
     cur.execute("INSERT INTO time_on_pc(distance) VALUES (?);", dist)
+    conn.commit()
+
+
+def log_aggregate(conn, time_on):
+    cur = conn.cursor()
+    cur.execute("INSERT INTO aggregate_table(time_on_pc) VALUES (?);", time_on)
     conn.commit()
 
 

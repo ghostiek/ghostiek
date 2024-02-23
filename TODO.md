@@ -1,4 +1,2 @@
-- Write algo to detect spikes in distance to annotate time spent on PC
-- Log the time spent in a table
 - Once enough data is accumulated run forecasting algo
 - Code is mostly reproducible off shell scripts, but there are still some manual changes needed to make, need to update that

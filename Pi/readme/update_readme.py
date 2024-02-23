@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from datetime import datetime, timedelta
 from Pi.readme.visualisation import get_data, light_plot, dark_plot
+import Pi.readme.time_on_pc as tp
 from git import Repo
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -26,8 +27,9 @@ except FileNotFoundError:
     data = get_data(is_pi)
 
 data = get_data(is_pi)
-light_plot(data, is_pi)
-dark_plot(data, is_pi)
+cumulative_times = tp.get_cumulative_times(data, is_pi)
+light_plot(data, cumulative_times, is_pi)
+dark_plot(data, cumulative_times, is_pi)
 
 light_line_graph_name = f"light-plot-{yesterdays_date}.png"
 light_line_graph_url = f"{line_graphs}/{light_line_graph_name}"

@@ -111,16 +111,14 @@ def sensor_plot(df, is_pi, color):
         plt.show()
 
 
-def percentage_plot(df, is_pi, color):
+def percentage_plot(df, data, is_pi, color):
     HEIGHT = 0.2
     LABELS = ["On PC", "Not on PC"]
     COLORS = {"On PC": [1,0,0,0.5], "Not on PC": [.5, .5, .8]}
-
-    x = tp.get_cumulative_times(df, is_pi)
     # Not on PC
-    time1 = x[0].total_seconds()
+    time1 = data[0].total_seconds()
     # On PC
-    time2 = x[1].total_seconds()
+    time2 = data[1].total_seconds()
     total = time1 + time2
     # plt.bar(["On PC", "Not On PC"], [x1.total_seconds() for x1 in x])
     # Make thinner, remove grid, add title maybe? fix colors
@@ -144,15 +142,15 @@ def percentage_plot(df, is_pi, color):
         plt.show()
 
 
-def light_plot(df, is_pi):
+def light_plot(df, cumulative_times, is_pi):
     sensor_plot(df, is_pi, "light")
-    percentage_plot(df, is_pi, "light")
+    percentage_plot(df, cumulative_times, is_pi, "light")
 
 
-def dark_plot(df, is_pi):
+def dark_plot(df, cumulative_times, is_pi):
     plt.style.use('dark_background')
     sensor_plot(df, is_pi, "dark")
-    percentage_plot(df, is_pi, "dark")
+    percentage_plot(df, cumulative_times, is_pi, "dark")
 
 
 if __name__ == "__main__":
@@ -167,5 +165,6 @@ if __name__ == "__main__":
     except FileNotFoundError:
         is_pi = False
     data = get_data(is_pi, 1)
-    light_plot(data, is_pi)
-    dark_plot(data, is_pi)
+    cumulative_times = tp.get_cumulative_times(data, is_pi)
+    light_plot(data, cumulative_times, is_pi)
+    dark_plot(data, cumulative_times, is_pi)

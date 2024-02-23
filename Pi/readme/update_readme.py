@@ -27,7 +27,7 @@ except FileNotFoundError:
     data = get_data(is_pi)
 
 data = get_data(is_pi)
-cumulative_times = tp.get_cumulative_times(data, is_pi)
+cumulative_times = tp.get_cumulative_times(data, 0, is_pi)
 light_plot(data, cumulative_times, is_pi)
 dark_plot(data, cumulative_times, is_pi)
 

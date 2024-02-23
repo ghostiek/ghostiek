@@ -116,7 +116,7 @@ def percentage_plot(df, is_pi, color):
     LABELS = ["On PC", "Not on PC"]
     COLORS = {"On PC": [1,0,0,0.5], "Not on PC": [.5, .5, .8]}
 
-    x = tp.get_cumulative_times(df)
+    x = tp.get_cumulative_times(df, is_pi)
     # Not on PC
     time1 = x[0].total_seconds()
     # On PC

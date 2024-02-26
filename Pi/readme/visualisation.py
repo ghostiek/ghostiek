@@ -125,7 +125,9 @@ def percentage_plot(df, data, is_pi, color):
     fig = plt.figure(figsize=[14, 10])
     ax = plt.subplot(111)
     hbar = ax.barh([0], 100 * time1 / total, height=HEIGHT, facecolor="red", alpha=0.5)
-    ax.bar_label(hbar, fmt='%.0f%%', label_type="center", fontsize=16)
+    # Include the percentage if there's space, otherwise omit
+    if time1/total > 0.1:
+        ax.bar_label(hbar, fmt='%.0f%%', label_type="center", fontsize=16)
     ax.barh([0], 100 * time2 / total, height=HEIGHT, color=[.5, .5, .8], left=100 * time1 / total)
     plt.xlim(0, 100)
     plt.ylim(0, 0.5)

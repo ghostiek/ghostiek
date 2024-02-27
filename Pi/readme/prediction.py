@@ -1,4 +1,4 @@
-# Currently we don't have much data, what would make the most sense would be to simply use a 4 day moving average will
+# Currently we don't have much data, what would make the most sense would be to simply use a moving average will
 # iterate more on it in the future
 import pandas as pd
 from datetime import date, timedelta
@@ -12,8 +12,8 @@ def moving_average_prediction(data: list):
 
 if __name__ == "__main__":
     conn = connect_db()
-    dt_now = date.today()
-    data = read_aggregate_data(conn, dt_now)
+    dt_cut_off = date.today() - timedelta(days=5+1)
+    data = read_aggregate_data(conn, dt_cut_off)
     result = moving_average_prediction(data)
     print(result)
 

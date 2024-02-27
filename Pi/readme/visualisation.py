@@ -25,8 +25,7 @@ def get_data(is_pi=False, day=1):
         path = Path(dir_path)
         parent_path = path.parent.absolute()
         conn = db.connect_db(f"{parent_path}/db/mariadb_config.json")
-        cur = conn.cursor()
-        data = db.read_data(conn, cur, date_filter)
+        data = db.read_time_on_pc_data(conn, date_filter)
         conn.close()
 
         with open(f"{path}/{file_path}", "w") as data_file:

@@ -40,9 +40,19 @@ def log_aggregate(conn, time_on):
     conn.commit()
 
 
-def read_data(conn, cur, start_date):
+def read_time_on_pc_data(conn, start_date: datetime.date):
+    cur = conn.cursor()
     start_date = start_date.strftime("%Y-%m-%d")
     # Get Cursor
     cur.execute(f"SELECT * FROM sensordb.time_on_pc WHERE timestamp_column > '{start_date}';")
+    result = cur.fetchall()
+    return result
+
+
+def read_aggregate_data(conn, start_date: datetime.date):
+    cur = conn.cursor()
+    start_date = start_date.strftime("%Y-%m-%d")
+    # Get Cursor
+    cur.execute(f"SELECT * FROM sensordb.aggregate_table WHERE timestamp_column > '{start_date}';")
     result = cur.fetchall()
     return result

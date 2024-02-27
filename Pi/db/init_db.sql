@@ -10,6 +10,6 @@ USE sensordb;
 
 CREATE TABLE aggregate_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    timestamp_column DATE DEFAULT LAST_DAY(CURRENT_DATE),
+    timestamp_column DATE,
     percent_time_on_pc FLOAT
 );

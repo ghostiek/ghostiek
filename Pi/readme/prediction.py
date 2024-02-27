@@ -5,8 +5,9 @@ from datetime import date, timedelta
 from Pi.db.db_utils import connect_db, read_aggregate_data
 
 
-def moving_average_prediction(df: pd.DataFrame):
-    return df["percent_time_on_pc"].sum()/df.shape[0]
+def moving_average_prediction(data: list):
+    total = sum([x[2] for x in data])
+    return total/len(data)
 
 
 if __name__ == "__main__":

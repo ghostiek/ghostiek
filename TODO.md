@@ -1,2 +1,3 @@
+- Look into making timestamp\_column a unique key, especially for aggregate\_table then maybe creating some kind of update if dupe exists for the logging
 - Once enough data is accumulated run forecasting algo
 - Code is mostly reproducible off shell scripts, but there are still some manual changes needed to make, need to update that

@@ -34,9 +34,9 @@ def log_distance(conn, dist):
     conn.commit()
 
 
-def log_aggregate(conn, time_on):
+def log_aggregate(conn, dt, time_on):
     cur = conn.cursor()
-    cur.execute("INSERT INTO aggregate_table(percent_time_on_pc) VALUES (?);", time_on)
+    cur.execute("INSERT INTO aggregate_table(timestamp_column, percent_time_on_pc) VALUES (?, ?);", (dt, time_on))
     conn.commit()
 
 

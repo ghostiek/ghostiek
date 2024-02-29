@@ -40,7 +40,7 @@ def get_cumulative_times(data: pd.DataFrame, delay: int = 0, is_pi=False):
         conn = db.connect_db()
         seconds_per_day = 86400
         perc_time_on = time_on_pc.total_seconds()/seconds_per_day
-        db.log_aggregate(conn, (datetime.today()-timedelta(days=1), perc_time_on,))
+        db.log_aggregate(conn, datetime.today()-timedelta(days=1), perc_time_on)
     return time_on_pc, time_off_pc
 
 

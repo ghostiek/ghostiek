@@ -43,6 +43,7 @@ def preprocess_data(df, date_filter):
     hours_period = 0.25
     df["Timestamp"] = pd.to_datetime(df["TimestampString"], format="%Y-%m-%d %H:%M:%S")
     df.index = df["Timestamp"]
+    df = df.sort_index()
     df = df[(df["Timestamp"].dt.date >= min_date) & (df["Timestamp"].dt.date < max_date)]
     # Smoothing the data
     df["DistanceSmooth"] = df["Distance"].rolling(window=timedelta(hours=hours_period), center=True).mean()

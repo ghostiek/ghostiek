@@ -9,11 +9,11 @@ I'm a Data Scientist and I love learning about Statistics.
 ### Distance from the sensor hooked to my desk throughout the day
 <figure>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Pi/readme/graphs/lineplot/dark-plot-2024-11-08.png">
-    <source media="(prefers-color-scheme: light)" srcset="Pi/readme/graphs/lineplot/light-plot-2024-11-08.png">
-    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="Pi/readme/graphs/lineplot/light-plot-2024-11-08.png">
+    <source media="(prefers-color-scheme: dark)" srcset="Pi/readme/graphs/lineplot/dark-plot-2024-11-09.png">
+    <source media="(prefers-color-scheme: light)" srcset="Pi/readme/graphs/lineplot/light-plot-2024-11-09.png">
+    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="Pi/readme/graphs/lineplot/light-plot-2024-11-09.png">
   </picture>
-  <figcaption>Fig 1. Sensor Data from 2024-11-08</figcaption>
+  <figcaption>Fig 1. Sensor Data from 2024-11-09</figcaption>
 </figure>
 
 
@@ -21,9 +21,9 @@ I'm a Data Scientist and I love learning about Statistics.
 ### Aggregate Time Spent on the PC
 <figure>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Pi/readme/graphs/barplot/dark-plot-2024-11-08.png">
-    <source media="(prefers-color-scheme: light)" srcset="Pi/readme/graphs/barplot/light-plot-2024-11-08.png">
-    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="Pi/readme/graphs/barplot/light-plot-2024-11-08.png">
+    <source media="(prefers-color-scheme: dark)" srcset="Pi/readme/graphs/barplot/dark-plot-2024-11-09.png">
+    <source media="(prefers-color-scheme: light)" srcset="Pi/readme/graphs/barplot/light-plot-2024-11-09.png">
+    <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="Pi/readme/graphs/barplot/light-plot-2024-11-09.png">
   </picture>
-  <figcaption>Fig 2. Percentage of Time Spent on the PC on 2024-11-08</figcaption>
+  <figcaption>Fig 2. Percentage of Time Spent on the PC on 2024-11-09</figcaption>
 </figure>

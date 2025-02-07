@@ -255,7 +255,7 @@ cython_debug/
 .idea/
 
 # Get rid of creds
-Pi/readme/ssh_config.json
+Pi/readme/git_config.json
 Pi/readme/mariadb_ga_config.json
 Pi/pi_info.json
 mariadb_config.json

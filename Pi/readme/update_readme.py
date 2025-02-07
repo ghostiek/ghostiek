@@ -14,9 +14,9 @@ readme_path = f"{root_path}/README.md"
 graphs_path = "Pi/readme/graphs"
 line_graphs = f"{graphs_path}/lineplot"
 bar_graphs = f"{graphs_path}/barplot"
+git_repo_path = f"{root_path}/.git"
 
 yesterdays_date = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
-git_repo_path = f"{root_path}/.git"
 
 try:
     with open(f"{pi_path}/pi_info.json", "r") as pi_info_file:
